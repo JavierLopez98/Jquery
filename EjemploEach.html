@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    
+    <title>Document</title>
+</head>
+<body>
+    
+    <h1>Ejemplo Each()</h1>
+
+    <p>1</p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+
+    
+
+
+</body>
+<script src="jquery-3.5.1.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $("p").click(function(){
+            var colores=["black","red","blue","green","yellow"];
+            $("p").each(function(){
+                var random=parseInt(Math.random()*colores.length);
+                var color= colores[random];
+                $(this).css("background-color",color);
+                $(this).text(color);
+            });
+        });
+    });
+</script>
+</html>

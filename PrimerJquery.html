@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .rojo{
+            color:red;
+        }
+
+    </style>
+</head>
+<body>
+    <h1 class="rojo">Titulo 1</h1>
+    <h2 class="rojo">Titulo 2</h2>
+    <h1 class="rojo">Titulo 3</h1>
+    <h2 id="titulo4">Titulo 4</h2>
+    
+</body>
+<script src="jquery-3.5.1.min.js"></script>
+<script>
+    //Instruccion para cuando ha cargado la pagina
+    $(document).ready(function(){
+        //Esto es un codigo Js y Jquery
+        //podemos utilizar cualquier instruccion de js
+        //alert("jquery cargado");
+
+        // $("h1").hide();
+        //Podemos asignar Eventos (Listener) a un conjunto mediante sus selectores
+        /*$("h2").click(function(){
+           //con $("h2").hide(); oculta todos los elementos
+           //tenemos que utilizar la palabra clave this mediante
+           //var js=this; esto es javascript
+           //var jquery=$(this); esto es Jquery
+           //$(this).hide();
+        });*/
+        //selector de clase
+        $(".rojo").mouseover(function(){
+            $(this).fadeOut(5000);
+        });
+        //selector de id
+        $("#titulo4").click(function(){
+           alert("pulsado");
+        });
+
+    })
+</script>
+</html>

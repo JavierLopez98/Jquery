@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    
+    <title>Document</title>
+    <style>
+        img{
+            width: 80px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+
+    <form>
+        <input type="range" min="1" max="10" value="1"step="1" id="rango"/>
+        <span id="valor"></span>
+        <br/>
+        <br/>
+        <div id="resultado"></div>
+    </form>
+    
+</body>
+<script src="jquery-3.5.1.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $("#rango").change(function(){
+           $("#resultado").text("")
+            $("#valor").text( $(this).val());
+            
+            for (var i=0;i<parseInt($(this).val());i++){
+                var foto=$("<img/>");
+                foto.attr("src","Imagenes/1.jpg");    
+                $("#resultado").append(foto);
+
+                foto.mouseover(function(){
+                    $(this).attr("src","Imagenes/2.jpg");
+                });
+                foto.mouseleave(function(){
+                    $(this).attr("src","Imagenes/1.jpg");
+                })
+            }
+
+            
+            
+        });
+        
+        
+    });
+
+    
+
+</script>
+</html>

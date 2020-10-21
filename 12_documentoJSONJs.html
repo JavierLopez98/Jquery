@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <h1>Leer clientes JS</h1>
+    <button type="button" id="botonclientes" onclick="realizarpeticion()">Leer clientes</button>
+    <div id="resultado"></div>
+</body>
+<script type="text/javascript"> 
+    function realizarpeticion(){
+        var xhr=new XMLHttpRequest();
+        xhr.onreadystatechange=function(){
+            if(this.readyState==4&&this.status==200){
+            console.log(this.readyState);
+            //aqui capturaremos la respuesta 
+            //y convertiremos el objeto texto plano a json
+            var textoplano =this.responseText;
+            //convertimos el texto plano a formato json
+            //para tratarlo
+            var data=JSON.parse(textoplano);
+            leerDatosJson(data);
+            }
+        }
+        xhr.open("GET","Json/clientessimples.json",true);
+        xhr.send();
+    }
+
+    function leerDatosJson(data){
+        //los objetos json vienen de javascript
+        //y se manejan igual que jquery
+        for(var i=0;i<data.clientes.length;i++){
+            var h1=document.createElement("h1");
+            //capturamos cada cliente 
+            var cliente=data.clientes[i];
+            h1.innerText=cliente.nombre;
+            document.getElementById("resultado").appendChild(h1);
+        }
+    }
+</script>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Lectura de atributos XML</h1>
+    <button type="button" id="botonlectura">cargar datos</button>
+    <hr/>
+    <table border="1" id="tabla">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Direccion</th>
+                <th>telefono</th>
+                <th>Camas</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</body>
+<script src="jquery-3.5.1.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $("#botonlectura").click(function(){
+            $("#tabla tbody").empty();
+            $.get("Xml/HOSPITAL_ATRIBUTOS.xml",function(data){
+                var hospitales =$(data).find("HOSPITAL");
+                //recorremos todos los hospitales
+                hospitales.each(function(){
+                    //para recuperar un atributo: .attr("name")
+                    var nombre=$(this).attr("NOMBRE");
+                    var direccion=$(this).attr("DIRECCION");
+                    var telefono =$(this).attr("TELEFONO");
+                    var camas=$(this).attr("NUM_CAMA");
+                    //creacion de fila con datos
+                    var tr=$("<tr>").append($("<td>",{"text":nombre})).
+                    append($("<td>",{"text":direccion})).
+                    append($("<td>",{"text":telefono})).
+                    append($("<td>",{"text":camas}));
+                $("#tabla tbody").append(tr);
+                                            
+                });
+            });
+        });
+    });
+
+</script>
+</html>

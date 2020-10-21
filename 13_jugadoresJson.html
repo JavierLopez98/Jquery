@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        img{
+            width: 140px;
+            height: 200px;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Jugadores</h1>
+    <form>
+        <label>Nombre de jugador: </label>
+        <select id="seleccionjugador"></select>
+    </form>
+    <div id="respuesta"></div>
+</body>
+<script src="Jquery/jquery-3.5.1.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $.ajax({
+            url:"Json/jugadores.json"
+            ,method:"get"
+            ,success:function(data){
+                console.log(data);
+                $.each(data.jugadores,function(index,value){
+                    var op=$("<option>",{
+                        "text":value.nombre
+                        ,value:index
+                    });
+                    op.data("id",index);
+                    op.appendTo("#seleccionjugador");
+                });
+                
+            }
+            ,error:function(){
+                console,log("error en la lectura del fichero")
+            }
+        });
+
+        $("#seleccionjugador").change(function(){
+            console.log("cambio");
+            $("#respuesta").text("");
+            $.ajax({
+                url:"Json/jugadores.json"
+                ,method:"get"
+                ,success:function(data){
+                    console.log("success");
+                    console.log(data);
+                    $.each(data.jugadores,function(index,value){
+                        //
+                        if($("#seleccionjugador option:selected").val()==index){
+                            console.log("dentro if");
+                            var numero=$("<h3>",{
+                                text:value.numero
+                            });
+                            console.log(value.numero);
+
+                            var nombre=$("<h3>",{
+                                "text":value.nombre
+                            });
+
+                            var posicion=$("<h3>",{
+                                "text":value.posicion
+                            });
+
+                            var edad=$("<h3>",{
+                                "text":value.edad
+                            });
+                            var salto=$("<br>");
+                            var foto=$("<img>",{
+                                src:value.imagen
+                            });
+                            $("#respuesta")
+                                            .append(numero)
+                                            .append(nombre)
+                                            .append(posicion)
+                                            .append(edad)
+                                            .append(salto)
+                                            .append(foto);
+                    }
+                    //console.log("fuera if")
+                    });
+                }
+                ,error:function(){
+                    console.log("Error de lectura")
+                }
+            });
+
+        });
+    });
+</script>
+</html>

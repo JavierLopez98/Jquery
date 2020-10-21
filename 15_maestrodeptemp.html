@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Maestro de detalle departamente empleados</h1>
+    <button type="button" id="atras">atras</button>
+    <table id="tabladept" border="1px solid black">
+        <thead>
+            <tr>
+                <th>Número</th>
+                <th>Nombre</th>
+                <th>Localidad</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <table id="tablaemp" border=1>
+        <thead>
+            <tr>
+                <th>Id Empleado</th>
+                <th>Apellido</th>
+                <th>Oficio</th>
+                <th>Salario</th>
+                <th>Departamento</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</body>
+<script src="Jquery/jquery-3.5.1.min.js"></script>
+<script>
+    $(document).ready(function(){
+        cargaDatosDept();
+
+        $("#atras").click(function(){
+            $("#tablaemp body").empty();
+            $("#atras").hide();
+            $("#tabladept").show();
+            $("#tablaemp").hide();
+        })
+
+        function cargaDatosDept(){
+            $("#atras").hide();
+            $("#tablaemp").hide();
+            $.ajax({
+                url:"https://apicruddepartamentoscore.azurewebsites.net/api/Departamentos"
+                ,method:"GET"
+                ,success:function(data){
+                    $.each(data,function(index,dept){
+                        var tr=$("<tr>");
+                        var numerodept=$("<td>",{
+                            text:dept.numero
+                        });
+                        var nombredept=$("<td>",{
+                            text:dept.nombre
+                            
+                        });
+                        nombredept.data("info",dept.numero);
+                        nombredept.click(function(){
+                            $("#atras").show();
+                            $("#tabladept").hide();
+                            $("#tablaemp").show();
+                            cargaDatosEmple(parseInt($(this).data("info")));
+                            console.log($(this).data("info"));
+                        });
+                        var localidaddept=$("<td>",{
+                            text:dept.localidad
+                        });
+                        tr.append(numerodept)
+                          .append(nombredept)
+                          .append(localidaddept);
+                        $("#tabladept tbody").append(tr);
+                    });
+                }
+                ,error:function(){
+                    console.log("error de lectura");
+                }
+            });
+        }
+
+        function cargaDatosEmple(deptno){
+            $.ajax({
+                url:"https://apiempleadosspgs.azurewebsites.net/api/Empleados/EmpleadosDepartamento/"+deptno
+                ,method:"GET"
+                ,success:function(data){
+                    console.log(deptno);
+                    $.each(data,function(index,emp){
+                        var tr=$("<tr>");
+                        var idemple=$("<td>",{
+                            text:emp.idEmpleado
+                        });
+                        var apellidoemple=$("<td>",{
+                            text:emp.apellido
+                        });
+                        var oficioemple=$("<td>",{
+                            text:emp.oficio
+                        });
+                        var salarioemple=$("<td>",{
+                            text:emp.salario
+                        });
+                        var departamentoemple=$("<td>",{
+                            text:emp.departamento
+                        });
+                        tr.append(idemple)
+                          .append(apellidoemple)
+                          .append(oficioemple)
+                          .append(salarioemple)
+                          .append(departamentoemple);
+                        $("#tablaemp tbody").append(tr);
+                    });
+                }
+                ,error:function(){
+                    console.log("Error en la lectura de los datos de empleados");
+                }
+            });
+        }
+    });
+</script>
+</html>

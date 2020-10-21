@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+        
+    <title>Document</title>
+</head>
+<body>
+    <h1>Generar controles dinamicamente</h1>
+    <form>
+        <label>Contenido: </label>
+        <input type="text" id="cajaContenido"/>
+        <br/>
+        <button type="button" id="botonCreacion">Crear título</button><br/>
+        <div id="padre"></div>
+    </form>
+</body>
+<script src="jquery-3.5.1.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("#botonCreacion").click(function(){
+        var texto=$("#cajaContenido").val();
+        //varias formas de creacion
+        //linea a linea
+        //var h1=$("<h1>");
+           // h1.text(texto);
+           // h1.css("color","blue");
+            //podemos crear el objeto con sus propiedades en una sola linea. formato JSON
+            //var objeto=$("<tag>",{
+            // "text":"soy un texto","style":"color":"blue"
+            //});
+            var h1=$("<h1>",{
+                "text":texto,"style":"color:white;background-color:black"
+            });
+            //h1.appendTo($("#padre"));
+            //añadimos objeto al padre
+            $("#padre").append(h1);
+            //si queremos que los elementos tengan eventos, tendremosq ue realizar metodos delegados(event handler) para el objeto creado
+            //dos sintaxis: antigua on.
+            //1: h1.on("click", function(){
+            //     $(this).text("Texto cambiado");
+            // });
+            //2: sintaxis propia de jquery
+            h1.click(function(){
+                $(this).text("Cambiando...")
+            });
+
+    });
+
+    //Los eventos se activan sobre los objetos creados dinamicamente??
+    //solamente entran en el juego de eventos los objetos dibujados en la carga de la pagina
+    $("h1").click(function(){
+        alert("pulsado");
+    });
+});
+</script>
+</html>

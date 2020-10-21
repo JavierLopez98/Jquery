@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+
+    <script>
+        window.onload=function(){
+            var xhttp=new XMLHttpRequest();
+            xhttp.addEventListener("load",function(){
+                if(this.readyState==4 && this.status==200){
+                    var cajaenlace=document.getElementById("enlaces");
+                    var html=document.createElement("ul");
+                    var nodoalumnos=this.responseXML.getElementsByTagName("alumno");
+                    //for(var i=0;i<nodoalumnos.length;i++){
+                        for (var nodo of nodoalumnos){
+                        var nombre = nodo.getElementsByTagName("nombre")[0].textContent;
+                        var apellidos = nodo.getElementsByTagName("apellidos")[0].textContent;
+                        var nota = nodo.getElementsByTagName("nota")[0].textContent;
+                        var linea=document.createElement("li");
+                        var link= document.createElement("a");
+                        link.href="#";
+                        link.innerText=nombre
+                        link.setAttribute("data-apellido",apellidos);
+                        link.dataset.nota=nota;
+                        link.addEventListener("click",muestradatos);
+                        html.appendChild(linea).appendChild(link);
+                    }
+                    document.getElementById("enlaces").appendChild(html);
+
+
+                }
+
+            });
+            xhttp.open("GET","Xml/alumnos.xml");
+            xhttp.send();
+
+        }
+        function muestradatos(){
+            var cajaresultado=document.getElementById("resultado");
+            cajaresultado.innerText="";
+            //creamos contenedores
+            var cajanombre=document.createElement("h1");
+            var cajanota=document.createElement("h3");
+            //recuperamos datos
+            var apellidos=this.dataset.apellido;
+            var nota=this.dataset.nota;
+            cajanombre.innerText=this.innerText+" "+apellidos;
+            cajanota.innerText="Nota: "+nota;
+
+            cajaresultado.appendChild(cajanombre)
+            .appendChild(cajanota);
+        }
+                        /*var nombre=nodoalumnos[i].getElementsByTagName("nombre")[0].textContent;
+                        var linea=document.createElement("li");
+                        var enlace=document.createElement("a");
+                        enlace.href="#";
+                        enlace.dataset.posicion=i;
+                        console.log(enlace.dataset.posicion);
+                        enlace.innerText=nombre;
+                        //enlace.data-nombre=nombre;
+                        linea.appendChild(enlace);
+                        html.append(linea);
+                        linea.addEventListener("click",pedirInfo);
+                    }
+                    cajaenlace.appendChild(html);
+                }
+            });
+            xhttp.open("GET","Xml/alumnos.xml");
+            xhttp.send();
+        }
+        function pedirInfo(){
+            
+            var xhttp=new XMLHttpRequest();
+            xhttp.addEventListener("load",leerDatos);
+            xhttp.open("GET","Xml/alumnos.xml");
+            xhttp.send();
+        }
+
+        function leerDatos(){
+            if(this.readyState==4 && this.status==200){
+                var cajaresultado=document.getElementById("resultado");
+
+            }
+        }
+
+        /*function leerDatos(){
+           
+            
+            if(this.readyState==4 && this.status==200){
+                var pos=0;
+                
+                var cajaresultado=document.getElementById("resultado");
+                var docxml=this.responseXML;
+                var nodoalumnos=docxml.getElementsByTagName("alumnos");
+                for (var i=0;i<nodoalumnos.length;i++){
+                   /* if(nombrelink==nodoalumnos[i].getElementsByTagName("nombre")[0].textContent){
+                        pos=i;
+                        break;
+                    }
+                }
+                var alumno=nodoalumnos[pos];
+                //creamos contenedores
+                var cajanombre=document.createElement("h1");
+                var cajanota=document.createElement("h3");
+
+                //almacenamos general de alumnos
+                var nombre=alumno.getElementsByTagName("nombre")[0].textContent;
+                var apellido=alumno.getElementsByTagName("apellido")[0].textContent;
+                var nota=alumno.getElementsByTagName("nota")[0].textContent;
+                var textoNombre=nombre +" "+apellido;
+                var textoNota="Nota: "+nota;
+                
+                cajanombre.appendChild(textoNombre);
+                cajanota.appendChild(textoNota);
+
+                cajaresultado.appendChild(cajanombre);
+                cajaresultado.appendChild(document.createElement("br"));
+                cajaresultado.appendChild(cajanota);
+
+            }
+        }*/
+
+    </script>
+</head>
+<body>
+    <div id="enlaces">
+
+
+    </div>
+
+    <div id="resultado">
+
+
+    </div>
+    
+</body>
+</html>

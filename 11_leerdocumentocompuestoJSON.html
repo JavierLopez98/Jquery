@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <h1>leer documento compuesto JSON</h1>
+    <button type="button" id="botonclientes">Leer clientes Json</button>   
+    <div id="resultado"></div>
+</body>
+<script src="Jquery/jquery-3.5.1.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $("#botonclientes").click(function(){
+            $.getJSON("Json/clientessimples.json",function(data){
+                //el recorrido es con $.each() pero si recorremos arrays [] lo que viene es el indice del objeto y el propio objeto
+                $.each(data.clientes,function(index,cliente){
+                    //las propiedades de los objetos json son dinamicas
+                    var h1=$("<h1>",{
+                        text:"Indice: "+index+", Nombre: "+cliente.nombre
+                    });
+                    h1.appendTo("#resultado");
+                });
+            });
+        });
+    });
+</script>
+</html>
