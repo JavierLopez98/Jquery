@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript">
+
+        function realizarPeticion(){
+            var xhttp=new XMLHttpRequest();
+            xhttp.addEventListener("load",mostrarDatos);
+            xhttp.open("GET","Xml/empleados.xml");
+            xhttp.send();
+        }
+
+        function mostrarDatos(){
+            //tenemos 2 propiedades en el objeto this
+            //this.readyState --> si ha finalizado la lectura(4)
+            //this.status --> el codigo de la respuesta (404) 200
+
+            var contenido=document.getElementById("contenido");
+            if(this.readyState==4&&this.status==200){
+                console.log("1");
+                var docxml=this.responseXML;
+                var nodosapellido=docxml.getElementsByTagName("APELLIDO");
+                var html="<ul>";
+                for(var i=0;i<nodosapellido.length;i++){
+                    var nodo=nodosapellido[i];
+                    //cuando el nodo tiene contenido, si el nodo tiene subelementos nos devuelve el contenido de los subelementos
+                    //.textContent
+                    var apellido=nodo.textContent;
+                    html+="<li>"+apellido+"</li>";
+                }
+                html="</ul>";
+                contenido.innerHtml=html;
+            }else{
+                contenido.innerHtml="<h1 style='color:red'>La petcion ha sido incorrecta: "+this.status+"</h1>";
+            }
+        }
+    </script>   
+</head>
+<body>
+    <h1>Leer documento Empleados.xml simple</h1>
+    <button type="button" onclick="realizarPeticion()">Leer Empleados.xml</button>
+    <div id="contenido"></div>
+</body>
+</html>

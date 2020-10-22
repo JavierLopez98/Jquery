@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    
+    <title>Document</title>
+    <style>
+        img{
+            width: 80px;
+            height: 100px;
+        }
+        button{
+            width: 80px;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Posicion de elementos dinámicos</h1>
+
+    <form>
+        <input type="range" min="1"max="20" value="1" id="rango"/>
+        <span id="valorRango">1</span>
+
+    </form>
+
+    <hr/>
+    <div id="cajabotones"></div>
+    <hr/>
+    <div id="cajaImagenes"></div>
+    <hr/>
+    <div id="cajageneral"></div>
+</body>
+    <script src="Jquery/jquery-3.5.1.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#rango").change(function(){
+                $("#cajabotones").text("");
+                $("#cajaImagenes").text("");
+                $("#valorRango").text($(this).val());
+                for(var i=0;i<$(this).val();i++){
+                    var boton=$("<button>",{
+                        "text":"Imagen"+(i+1)
+                        ,"value":i
+                    });
+                    $("#cajabotones").append(boton);
+                    boton.click(function(){
+                        if($("#cajaImagenes").children().eq($(this).val()).attr("src")=="Imagenes/p2.jpg"){
+                        $("#cajaImagenes").children().eq($(this).val()).attr("src","Imagenes/p1.jpg");
+                        }else $("#cajaImagenes").children().eq($(this).val()).attr("src","Imagenes/p2.jpg");
+                    });
+                    var imagen=$("<img>",{
+                        "src":"Imagenes/p1.jpg"
+                    });
+                    $("#cajaImagenes").append(imagen);
+                }
+                for(var i=0;i<$(this).val();i++){
+                    var boton=$("<button>",{
+                        "text":"Imagen "+(i+1)
+                        ,"data-posicion": i
+                    });
+                    $("#cajageneral").append(boton);
+                    boton.click(function(){
+                        var botonval =$(this).data("posicion");
+                        $("img").each(function(){
+                            var imagenval=$(this).data("posicion");
+                            if(botonval==imagenval){
+                                if($(this.attr("src")=="Imagenes/p2.jpg")){
+                                    $(this).attr("src","Imagenes/p1.jpg");
+                                }else  $(this).attr("src","Imagenes/p2.jpg");
+                            }
+                        });
+                    });
+                }
+                    $("#cajageneral").append("<br/>");
+                    for(var i=0;i<$(this).val();i++){
+                    var imagen=$("<img>",{
+                        "src":"Imagenes/p1.jpg"
+                        ,"data-posicion": i
+                    });
+                    $("#cajageneral").append(imagen);
+                }
+                
+            });
+        });
+
+    </script>
+</html>

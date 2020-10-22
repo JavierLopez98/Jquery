@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Maestro de detalle departamento empleados</h1>
+    <button type="button" id="atras">atrás</button>
+    <table id="tabladept" border=1>
+        <thead>
+            <tr>
+                <th>Numero</th>
+                <th>Nombre</th>
+                <th>Localidad</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+
+    </table>
+    <table id="tablaemp" border=1>
+        <thead>
+            <tr>
+                <th>Id Empleado</th>
+                <th>Apellido</th>
+                <th>Oficio</th>
+                <th>Salario</th>
+                <th>Departamento</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</body>
+<script src="Jquery/jquery-3.5.1.min.js"></script>
+<script>
+    $(document).ready(function(){
+        cargaDatosDept();
+        /*$(document).on("click",".nombredept",function(){
+            console.log("dentro");
+            $("#tabladept").hide();
+            $("#atras").show();
+            $("#tablaemp").show();
+        });*/
+        
+        function cargaDatosDept(){
+            $("#atras").hide();
+            $("#tablaemp").hide();
+            console.log("cargaDept");
+            $.ajax({
+                url:"https://apicruddepartamentoscore.azurewebsites.net/api/departamentos"
+                ,method:"GET"
+                ,success:function(data){
+                    
+                    
+                    $.each(data,function(index,dept){
+                        var tr=$("<tr>");
+                        var numerodept=$("<td>",{
+                            text:dept.numero
+                            });
+                        var nombredept=$("<td>",{
+                            text:dept.nombre
+                            ,data-id:dept.numero
+                            });
+                        var localidaddept=$("<td>",{
+                            text:dept.localidad
+                        })
+                        
+                        nombredept.click(function(){
+                            $("#tabladept").hide();
+                            $("#atras").show();
+                            $("#tablaemp").show();
+                            console.log($(this).val());
+                            cargaDatosEmple(parseInt($(this).val()));
+                        });
+                        tr.append(numerodept)
+                          .append(nombredept)
+                          .append(localidaddept);
+                        $("#tabladept tbody").append(tr);
+                    });
+                    
+                }
+                ,error:function(){
+                    console.log("error en la lectura de ficheros");
+                }
+            });
+        }
+        function cargaDatosEmple(codDept){
+            $.ajax({
+                url:"https://apiempleadosspgs.azurewebsites.net/api/Empleados/EmpleadosDepartamento/"+parseInt(codDept)
+                ,method:"GET"
+                ,success:function(){
+                    $.each(data,function(index,emp){
+                        var tr=$("<tr>");
+                        var idemple=$("<td>");
+                        var apellidoemple=$("<td>");
+                        var oficioemple=$("<td>");
+                        var salarioemple=$("<td>");
+                        var departamentoemple=$("<td>");
+                        tr.append(idemple)
+                          .append(apellidoemple)
+                          .append(oficioemple)
+                          .append(salarioemple)
+                          .append(departamentoemple);
+                          $("#tablaemp tbody").append(tr);
+                    });
+                }
+                ,error:function(){
+                    console.log("error en la lecura de datos")
+                }
+            })
+        }
+        $("#atras").click(function(){
+            $("#tabladept").show();
+            $("#atras").hide();
+            $("#tablaemp").hide();
+            $("#tablaemp tbody").empty();
+        });
+    });
+</script>
+</html>

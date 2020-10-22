@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Acceso Servicios Api Departamentos</h1>
+    <form>
+        <label>Número: </label>
+        <input type="number" id="cajanumero"/>
+        <br/>
+        <label>Nombre: </label>
+        <input type="text" id="cajanombre"/>
+        <br/>
+        <label>Localidad: </label>
+        <input type="text" id="cajalocalidad"/>
+        <br/>
+        <button type="button" id="botonpost">Insertar</button>
+        <button type="button" id="botonput">Modificar</button>
+        <button type="button" id="botondelete">Eliminar</button>
+        
+    </form>
+
+    <hr/>
+    <table border="1" id="tabla">
+        <thead>
+            <tr>
+                <th>NUMERO</th>
+                <th>NOMBRE</th>
+                <th>LOCALIDAD</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <h2 id="mensaje"></h2>
+</body>
+<script src="Jquery/jquery-3.5.1.min.js"></script>
+<script>
+    var urlapi="https://apicruddepartamentoscore.azurewebsites.net/";
+    $(document).ready(function(){
+        cargarDepartamentos();
+        $("#botonpost").click(function(){
+            var numero=$("#cajanumero").val();
+            var nombre=$("#cajanombre").val();
+            var localidad=$("#cajalocalidad").val();
+            var request="/api/departamentos";
+            //necesitamos un objeto departamento convertido a json
+            //para crear objetos en js se utiliza se utiliza
+            //la instruccion new Object()
+            //sus propiedades son dinamicas, nos las inventamos
+            var dept=new Object();
+            dept.numero=parseInt(numero);
+            dept.nombre=nombre;
+            dept.localidad=localidad;
+            //transformamos el objeto a json
+            //mediante JSON.stringify
+            var json=JSON.stringify(dept);
+            $.ajax({
+                "url":urlapi+request
+                ,"type":"post"
+                ,"data":json
+                ,"contentType":"application/json"
+                ,success:function(){
+                    $("#mensaje").text("Departamento insertado");
+                    cargarDepartamentos();
+                }
+                ,error:function(){
+
+                }
+            });
+        });
+
+        $("#botonput").click(function(){
+            var numero=parseInt($("#cajanumero").val());
+            var nombre=$("#cajanombre").val();
+            var localidad=$("#cajalocalidad").val();
+            var request="/api/departamentos";
+            var dept=new Object();
+            dept.numero=numero;
+            dept.nombre=nombre;
+            dept.localidad=localidad;
+            var json=JSON.stringify(dept);
+            $.ajax({
+                url:urlapi+request
+                , contentType:"application/json"
+                , type:"PUT"
+                , data:json
+                , success:function(data){
+                    $("#mensaje").text("departamento modificado");
+                    cargarDepartamentos();
+                }
+            });
+        });
+        $("#botondelete").click(function(){
+            var numero=$("#cajanumero").val();
+            var request="/api/departamentos/"+numero;
+            $.ajax({
+                "url":urlapi+request,
+                "type":"DELETE",
+                success:function(data){
+                    $("#mensaje").text("Departamento eliminado "+numero);
+                    cargarDepartamentos();
+                }
+                ,error:function(){
+                    console.log("error de lectura");
+                }
+            });
+        });""
+
+    });
+    //separamos la lectura de departamentos en
+    // la funcion declarativa por que 
+    //la llamaremos al cargar la pagina y
+    // al realizar las consultas de accion tambien
+    function cargarDepartamentos(){
+        var request="/api/departamentos";    
+        $.ajax({
+            url:urlapi+request,
+            method:"GET",
+            success:function(data){
+                var html="";
+                $.each(data,function(index,dept){
+                    html+="<tr>";
+                    html+="<td>"+dept.numero+"</td>";
+                    html+="<td>"+dept.nombre+"</td>";
+                    html+="<td>"+dept.localidad+"</td>";
+                    html+="</tr>"
+                });
+                $("#tabla tbody").html(html);
+            }
+            ,error:function(){
+                console.log("error en la lectura de ficheros");
+            }
+        });
+    }
+
+</script>
+</html>
