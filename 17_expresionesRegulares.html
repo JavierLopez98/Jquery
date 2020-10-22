@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Expresiones regulares</h1>
+
+    <label>Codigo postal</label>
+    <input type="text" id="cajacodigo"/>
+<button type="button" id="botoncp">check</button>
+<br/>
+<label>NIF:</label>
+<input type="text" id="cajanif"/>
+<button type="button"id="botonnif">check</button>
+<h2 id="respuesta"></h2>
+</body>
+<script src="Jquery/jquery-3.5.1.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $("#botoncp").click(function(){
+            //Objeto
+            var expresion=new RegExp("^\\d{5}$");
+            //var expresion=new RegExp("^[0-9]{5}$");
+            var codigo=parseInt($("#cajacodigo").val());
+            var respuesta=expresion.test(codigo);
+            $("#respuesta").text(respuesta.toString().toUpperCase());
+        });
+        $("#botonnif").click(function(){
+            var expresion=/^\d{8}[A-Z]{1}$/;
+            //var expresion=/^[0-9]{8}[A-Z]{1}$/;
+            var nif=$("#cajanif").val();
+            var respuesta=expresion.test(nif);
+            $("#respuesta").text(respuesta.toString().toUpperCase());
+        });
+    });
+</script>
+</html>
