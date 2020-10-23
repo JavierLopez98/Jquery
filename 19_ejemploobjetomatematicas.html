@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Ejemplo creacion de objeto</h1>
+    <form>
+        <label>Numero: </label>
+        <input type="number" id="cajanumero"/>
+        <button type="button" id="botondoble">Mostrar doble</button>
+    </form>
+    <h1 style="color:blue"id="resultado"></h1>
+</body>
+<script src="Jquery/jquery-3.5.1.min.js"></script>
+<script src="js/19_objetomatematicas.js"></script>
+<script>
+    $(document).ready(function(){
+        $("#botondoble").click(function(){
+            var num=parseInt($("#cajanumero").val());
+            //creamos el objeto matematicas
+            var mates=new Matematicas(num);
+            //imprimimos el valor
+            console.log(mates.numero);
+            //llamamos al metodo para guardar el doble en el objeto mates
+            mates.generarDoble();
+            $("#resultado").text("Número original: "+mates.numero+", Doble: "+mates.doble);
+        });
+    });
+</script>
+</html>

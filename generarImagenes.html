@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <script type="text/javascript">
+        window.onload=function(){
+            var rengo=document.getElementById("rango");
+            rango.addEventListener("change",mostrarImagenes);
+
+        }
+        function mostrarImagenes(){
+            var rango=this;
+            var span= document.getElementById("valor");
+            span.innerText=rango.value;
+            var seleccion=document.getElementById("imagenes");
+            var indice=seleccion.selectedIndex;
+            var imagen=seleccion.options[indice].value;
+            console.log(imagen);
+            var html="";
+            
+            for (var i=0;i<parseInt(rango.value);i++){
+                html+="<img src='"+imagen+"'/>";
+            }
+            span.innerHTML=html;
+        }
+        /*function muestraImagen(){
+            var rango=document.getElementById("rango");
+            var seleccion=document.getElementById("imagenes");
+            var html=" ";
+            var foto="";
+            console.log(seleccion);
+            for (var opcion of seleccion.options){
+                if(seleccion.selected==true){
+            foto="Imagenes/1.jpg";
+                }else{
+                    foto="Imagenes/2.jpg";
+                }
+            }
+            console.log(rango.value);
+            
+
+            for (var i=0;i<=rango.value;i++){
+                html+="<img src='"+foto+"'/>";
+            }
+            var resultado=document.getElementById("resultado");
+            resultado.innerHTML=html;
+
+        }
+*/
+        
+    </script>
+
+    <style>
+        img{
+            width:80px;
+            height: 100px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>Generar imagenes</h1>
+
+    <form>
+<select name="imagenes" id="imagenes">
+<option value="Imagenes/1.jpg">nicol</option>
+<option value="Imagenes/2.jpg">jace</option>
+</select>
+<input type="range" min="0" max="100" value="1" step="1" id="rango"/>
+<span id="valor"></span>
+<br/>
+<br/>
+<div id="resultado"></div>
+</form>
+
+
+
+</select>
+
+    
+    
+</body>
+</html>

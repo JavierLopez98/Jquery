@@ -1,0 +1,40 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+    <meta charset="utf-8" /> 
+    <title></title> 
+    <script type="text/javascript"> 
+        window.onload = function () { 
+            var imagenes = document.getElementsByName("foto"); 
+            for (var img of imagenes) {  
+                img.addEventListener("mouseover", function () { 
+                    //cuando pasemos por encima cambia la imagen
+                    this.src = "Imagenes/2.jpg";
+                }); 
+                img.onmouseout=function(){
+                    //cuando el raton sale de la imagen se activa
+                    this.src="Imagenes/1.jpg";
+
+                }
+
+                //addEventListener(accion,funcion,callback)
+            } 
+        } 
+    </script> 
+    <style>
+        img{
+            width: 80px;
+            height: 80px;
+        }
+
+    </style>
+</head> 
+<body> 
+    <h1>Cambiar imagen</h1>
+    <img src="Imagenes/1.jpg" name="foto"/> 
+    <img src="Imagenes/1.jpg" name="foto"/> 
+    <img src="Imagenes/1.jpg" name="foto"/> 
+    <img src="Imagenes/1.jpg" name="foto"/> 
+    <img src="Imagenes/1.jpg" name="foto"/> 
+</body> 
+</html> 

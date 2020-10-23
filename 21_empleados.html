@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Descripcion de empleados por oficio</h1>
+    <form>
+        <select id="seleccionjob">
+            <option disabled selected></option>
+        </select>
+    </form>
+    <br/>
+    <table id="tablaemple" border=1px>
+        <thead>
+            <tr>
+                <th>Id Empleado</th>
+                <th>Apellido</th>
+                <th>Oficio</th>
+                <th>Fecha de alta</th>
+                <th>Salario</th>
+                <th>Departamento</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <div id="info"></div>
+</body>
+<script src="Jquery/jquery-3.5.1.min.js"></script>
+<script>
+    $(document).ready(function(){
+        cargaOficios();
+        $("#seleccionjob").change(function(){
+            $("#tablaemple tbody").empty();
+            var seleccion=$("#seleccionjob option:selected").val();
+            console.log(seleccion);
+            $.ajax({
+                url:"https://apipracticaempleados.azurewebsites.net/api/Empleados/EmpleadosOficio/"+seleccion
+                ,type:"GET"
+                ,success:function(data){
+                    
+                    $.each(data,function(index,emple){
+                        var tr=$("<tr>");
+                            
+                        var idemple =$("<td>",{
+                            text:emple.idempleado
+                        });
+                        var apellido=$("<td>",{
+                            text:emple.apellido
+                        });
+                        apellido.data("cod",idemple.text());
+                        var oficio=$("<td>",{
+                            text:emple.oficio
+                        });
+                        var alta=$("<td>",{
+                            text:emple.fechaalta
+                        });
+                        var sal=$("<td>",{
+                            text:emple.salario
+                        });
+                        var dept=$("<td>",{
+                            text:emple.departamento
+                        });
+                        tr.append(idemple)
+                          .append(apellido)
+                          .append(oficio)
+                          .append(alta)
+                          .append(sal)
+                          .append(dept);
+                          $("#tablaemple tbody").append(tr);
+                          apellido.click(function(){
+                              console.log($(this).data("cod"))
+                              cargaEmple($(this).data("cod"));
+                          });
+                    });
+                    
+                },error:function(){
+                    console.log("Error de lectura de empleados");
+                }
+            });
+        });
+
+        function cargaOficios() {
+            $.ajax({
+                url:"https://apipracticaempleados.azurewebsites.net/api/Empleados"
+                ,type:"GET"
+                ,success:function(data){
+                    
+                  var jobs=new Array();
+                  $.each(data,function(index,emple){
+                    jobs.push(emple.oficio);
+                  });
+                  console.log(jobs);
+                  //jobs=jQuery.unique(jobs);
+                  var jobunico=jobs.filter((job,i,a)=>a.indexOf(job)===i);
+                  console.log(jobunico);
+                  for(var i=0;i<jobunico.length;i++){
+                      var op=$("<option>",{
+                          text:jobunico[i]
+                          ,value:jobunico[i]
+                      });
+                      $("#seleccionjob").append(op);
+                  }
+                }
+                ,error:function(){
+                    console.log("Error de lectura");
+                }
+            });
+        }
+
+        function cargaEmple(cod){
+            console.log(cod);
+            $.ajax({
+                url:"https://apipracticaempleados.azurewebsites.net/api/Empleados/"+parseInt(cod)
+                ,type:"GET"
+                ,success:function(data){
+                    console.log(cod);
+                    
+                    if(data!=null){
+                        var hoy=jQuery.now();
+                        console.log(hoy);
+                        var contrato=data.fechaalta;
+                        var html="<h3>Nombre del empleado: "+data.apellido+"</h3>";
+                        html+="<h4>Salario: "+data.salario+"</h4>";
+                        html+="<h4>Salario anual: "+parseInt(data.salario)*12+"</h4>";
+                        //html+="<h4>Tiempo en la empresa: "+hoy.diff(contrato,"years")+"</h4>";
+                            $("#info").html(html);
+                    }
+                },error:function(){
+                    console.log("error de lectura")
+                }
+            });
+        }
+    });
+</script>
+</html>

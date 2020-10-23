@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <script type="text/javascript">
+    function mostrarSeleccionado(){
+        //recorremos el select
+        var select=document.getElementById("deportes");
+        //existe un array predeterminado que es options[]
+        for(var op of select.options){
+            //si son option, para saber su seleccion es con selected
+            if(op.selected==true){
+                //solo entra una vez por que no tenemos seleccion multiple
+                var resultado= document.getElementById("resultado");
+                //en cliente (js) podemos acceder tanto al texto visible
+                //(innerText) o al valor (value)
+                resultado.innerText="Valor: "+op.value+", Texto: "+op.innerText;
+            }
+            
+        }
+    }
+    function colorSeleccionado(){
+       
+        //var color=document.getElementsByName("color");
+        var color=document.formulario.color;
+        var html="Colores seleccionados: ";
+        console.log(color.length);
+
+        for (var col of color){
+            if(col.selected==true){
+                html+=col.innerText+", ";
+            }
+        }
+        var resultado=document.getElementById("resultado");
+        resultado.innerText=html;
+    }
+    
+    </script>
+</head>
+<body>
+    <h1>Controles de forms</h1>
+    <label>Seleccione sus colores favoritos: </label>
+    <form name="formulario">
+        <ul>
+            <li><input type="checkbox" value="Rojo" name="color"/>Rojo</li>
+            <li><input type="checkbox" value="Azul" name="color"/>Azul</li>
+            <li><input type="checkbox" value="Verde" name="color"/>Verde</li>
+            <li><input type="checkbox" value="Morado" name="color"/>Morado</li>
+        </ul>
+    
+    <button type="button"onclick="colorSeleccionado()">Mostrar color seleccionado</button>
+
+        <select id="deportes">
+            <option value="Petanca">Petanca</option>
+            <option value="Esports">Esports</option>
+            <option value="Baseball">Baseball</option>
+            <option value="Baloncesto">Baloncesto</option>
+        </select>
+    <button type="button" onclick="mostrarSeleccionado()">Mostrar deporte seleccionado</button>
+</form> 
+        <h1 id="resultado"></h1>
+</body>
+</html>

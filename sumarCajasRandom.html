@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <script>
+        window.onload= function(){
+            var numeros=document.formulario.numero;
+            console.log(numeros.length);
+            for(var numero of numeros){
+                numero.value=Math.floor((Math.random()*100)+1);
+            }
+        }
+        function sumaNumeros(){
+            var numeros=document.formulario.numero;
+            var suma=0;
+            var op=document.formulario.opcion;
+            console.log(op);
+
+            for (var i=0;i<numeros.length;i++){
+                
+                if((i+1)%2==0){
+                    document.formulario.numero[i].style.backgroundColor="LightGoldenRodYellow";
+                }else{
+                    document.formulario.numero[i].style.backgroundColor="LightCoral";
+                }
+
+                if(op.value=="par"){
+                    if((i+1)%2==0)suma+=parseInt(numeros[i].value);
+                }else if(op.value=="impar"){if ((i+1)%2!=0)suma+=parseInt(numeros[i].value);
+                    
+                }else{
+                    suma+=parseInt(numeros[i].value);
+                }
+            }
+
+            var resultado=document.getElementById("resultado");
+            resultado.innerText=suma;
+        }
+
+    </script>
+    <stlye>
+
+    </stlye>
+</head>
+<body>
+    <h1>Sumar cajas random</h1>
+
+    <form name="formulario">
+        <ul>
+            <li><input type="radio" name="opcion" value="par"/>Odd</li>
+            
+            <li><input type="radio" name="opcion" value="impar"/>Even</li>
+        </ul>
+        <input type="number" name="numero"/>
+        <br/>
+        <input type="number" name="numero"/> 
+        <br/>
+        <input type="number" name="numero"/>
+        <br/>
+        <input type="number" name="numero"/>
+        <br/>
+
+        <button type="button" onclick="sumaNumeros()">Sumar</button>
+
+    </form>
+    <h1 id="resultado"></h1>
+</body>
+</html>
