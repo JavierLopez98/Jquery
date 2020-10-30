@@ -5,7 +5,7 @@ export default class ConjeturadeCollatz extends Component {
     num=React.createRef();
 
     state={
-        numero={}
+        numero=[]
     }
     calcularConjetura=(e)=>{
         e.preventDefault();
@@ -32,7 +32,9 @@ export default class ConjeturadeCollatz extends Component {
                 <label htmlFor="numero">Numero inicial</label>
                 <input type="number" ref={this.num} name="numero"/><br/>
                 <button>Iniciar</button>
-                {this.state.numero.length>0&&(<h2>{this.state.numero}</h2>)}
+                {this.state.numero.length>0&&(<ul>
+                {this.state.numero.map(n=>(<li key={n}>{n}</li>))}
+                </ul>)}
                 </form>
                 
             </div>
