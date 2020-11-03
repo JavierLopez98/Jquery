@@ -5,24 +5,27 @@ export default class ConjeturadeCollatz extends Component {
     num=React.createRef();
 
     state={
-        numero=[]
+        numeros:[]
     }
     calcularConjetura=(e)=>{
         e.preventDefault();
         var contador=0;
-        do{
-            if(this.num%2==0){
-                this.num=this.num/2
-                //almacenar numero
+        var numero=parseInt(this.num.current.value);
+        var datos=[];
+        while(numero!=1){
+            if(numero%2==0){
+                numero=numero/2;
             }
             else{
-                this.num=this.num*3+1
+                numero=numero*3+1;
                 //almacenar resultado
             }
-
-
+            datos.push(<li key={contador}>{numero}</li>);
             contador++;
-        }while(this.num!=1);
+        }
+        this.setState({
+            numeros:datos
+        });
     }
 
     render() {
@@ -32,9 +35,7 @@ export default class ConjeturadeCollatz extends Component {
                 <label htmlFor="numero">Numero inicial</label>
                 <input type="number" ref={this.num} name="numero"/><br/>
                 <button>Iniciar</button>
-                {this.state.numero.length>0&&(<ul>
-                {this.state.numero.map(n=>(<li key={n}>{n}</li>))}
-                </ul>)}
+                <ul>{this.state.numeros}</ul>
                 </form>
                 
             </div>
