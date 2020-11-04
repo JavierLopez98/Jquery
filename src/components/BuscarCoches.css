@@ -1,0 +1,17 @@
+img{
+    width: 100px;
+    height: 100px;
+}
+table {
+    border: 1px solid black;
+}
+thead {
+    background-color: lightgrey;
+}
+tbody{
+    background-color: lightsteelblue;
+    text-align: center;
+}
+.todos{
+    margin-left: 10px;
+}
