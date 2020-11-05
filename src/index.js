@@ -1,12 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import App from './components/App/App';
 import reportWebVitals from './reportWebVitals';
+import Customers from './components/Customers';
+import Departamentos from './components/Empleados/Departamentos';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Departamentos />
   </React.StrictMode>,
   document.getElementById('root')
 );

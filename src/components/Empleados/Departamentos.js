@@ -36,7 +36,8 @@ export default class Departamentos extends Component {
 
     cargaDept=()=>{
         var request="api/departamentos";
-        axios.get(Global.urldepartamentos+request).then(res=>{
+        axios.get(Global.urlDepartamentos+request).then(res=>{
+            console.log("dentro");
             this.setState({
                 departamento:res.data
                 ,status:true
