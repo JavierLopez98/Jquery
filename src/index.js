@@ -8,7 +8,7 @@ import Departamentos from './components/Empleados/Departamentos';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Departamentos />
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );
