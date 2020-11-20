@@ -1,0 +1,9 @@
+<div>
+    <img src="{{serie.imagen}}" style="width: 200px;">
+
+    <h3>{{serie.nombre}}</h3>
+
+    <p>IMDB: {{serie.puntuacion}}</p>
+
+    <a class="btn btn-success" [routerLink]="['/personajesserie',serie.idSerie]">Personajes</a>
+</div>

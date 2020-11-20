@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "examenangular"
+    }
+  },
+  "defaultProject": "examenangular",
+  "cli": {
+    "analytics": false
+  }
 }

@@ -1,0 +1,32 @@
+<h1>Personajes y series</h1>
+
+<form #formModificar="ngForm">
+<label>Seleccione una serie:</label>
+<select class="form-control" (change)="serieChange($event)">
+    <option *ngFor="let ser of series" value="{{ser.idSerie}}">{{ser.nombre}}</option>
+</select>
+<label>Seleccione un Personaje:</label>
+<select class="form-control" (change)="pjChange($event)">
+    <option *ngFor="let pj of personajes" value="{{pj.idPersonaje}}">{{pj.nombre}}</option>
+</select>
+<br/>
+<button class="btn btn-info" (click)="modificar()">Guardar cambios</button>
+
+</form>
+
+<!-- div serie -->
+<div *ngIf="serie!=null">
+
+    <h1>{{serie.nombre}}</h1>
+
+    <img src="{{serie.imagen}}" style="width: 200px"/>
+
+</div>
+<!-- div pj -->
+<div *ngIf="personaje!=null">
+
+    <h1>{{personaje.nombre}}</h1>
+
+    <img src="{{personaje.imagen}}" style="width: 200px"/>
+
+</div>
